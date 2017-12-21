@@ -3,80 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
  <script type="text/javascript" src="angular.js"></script>
   <script type="text/javascript" src="jquery-1.11.3.js"></script>
-  <script type="text/javascript" src="1.js"></script>
 </head>
-<body>
-<div ng-app="myApp" class="container-fluid">
-  <div class="row">
-    <div class="col-md-6" ng-controller="demoController as demo">
-      <h3>ngTable directive</h3>
-      <table ng-table="demo.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
-        <colgroup>
-          <col width="65%" />
-          <col width="10%" />
-          <col width="10%" />
-          <col width="15%" />
-        </colgroup>
-        <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
-          <td title="'Name'" filter="{name: 'text'}" sortable="'name'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" demo-tracked-table-cell>
-            <span ng-switch-default class="editable-text">{{row.name}}</span>
-            <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
-              <input type="text" name="name" ng-model="row.name" class="editable-input form-control input-sm" required />
-            </div>
-          </td>
-          <td title="'Age'" filter="{age: 'number'}" sortable="'age'" ng-switch="row.isEditing" ng-class="age.$dirty ? 'bg-warning' : ''" ng-form="age" demo-tracked-table-cell>
-            <span ng-switch-default class="editable-text">{{row.age}}</span>
-            <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
-              <input type="number" name="age" ng-model="row.age" class="editable-input form-control input-sm" required/>
-            </div>
-          </td>
-          <td title="'Money'" filter="{money: 'number'}" sortable="'money'" ng-switch="row.isEditing" ng-class="money.$dirty ? 'bg-warning' : ''" ng-form="money" demo-tracked-table-cell>
-            <span ng-switch-default class="editable-text">{{row.money}}</span>
-            <div class="controls" ng-class="money.$invalid && money.$dirty ? 'has-error' : ''" ng-switch-when="true">
-              <input type="number" name="money" ng-model="row.money" class="editable-input form-control input-sm" required/>
-            </div>
-          </td>
-          <td>
-            <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">
-                <span class="glyphicon glyphicon-ok"></span></button>
-            <button class="btn btn-default btn-sm" ng-click="demo.cancel(row, rowForm)" ng-if="row.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
-            <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
-            <button class="btn btn-danger btn-sm" ng-click="demo.del(row)" ng-if="!row.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-md-6" ng-controller="dynamicDemoController as demo">
-      <h3>ngTableDynamic directive</h3>
-      <table ng-table-dynamic="demo.tableParams with demo.cols" class="table table-bordered table-condensed table-hover editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
-        <colgroup>
-          <col width="65%" />
-          <col width="10%" />
-          <col width="10%" />
-          <col width="15%" />
-        </colgroup>
-        <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
-          <td ng-repeat="col in $columns" ng-class="rowForm[col.field].$dirty ? 'bg-warning' : ''" ng-form="{{col.field}}" demo-tracked-table-cell>
-            <span ng-if="col.dataType !== 'command' && !row.isEditing" class="editable-text">{{row[col.field]}}</span>
-            <div ng-if="col.dataType !== 'command' && row.isEditing" class="controls" ng-class="rowForm[col.field].$invalid && rowForm[col.field].$dirty ? 'has-error' : ''" ng-switch="col.dataType">
-              <input ng-switch-default type="text" name="{{col.field}}" ng-model="row[col.field]" class="editable-input form-control input-sm" required />
-              <input ng-switch-when="number" type="number" name="{{col.field}}" ng-model="row[col.field]" class="editable-input form-control input-sm" required />
-            </div>
-            <div ng-if="col.dataType === 'command'">
-              <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
-              <button class="btn btn-default btn-sm" ng-click="demo.cancel(row, rowForm)" ng-if="row.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
-              <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
-              <button class="btn btn-danger btn-sm" ng-click="demo.del(row)" ng-if="!row.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
-            </div>
+<body ng-app="Mapp" ng-controller="Mcon">
 
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
-</body>
+        商品名<input type="text" ng-model="ikind" value="" /> 价格<input type="text" ng-model="iprice" /> 数量<input type="text" ng-model="icount" />
+        <input type="button" ng-click="onClick()" value="添加" /><br /><input type="button" ng-click="onDelAll()" value="批量删除" />
+
+        <table border="1px" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><input type="checkbox" ng-model="all" ng-click="selectAll()" /></th>
+                <th>商品名</th>
+                <th>商品数量</th>
+                <th>商品价格</th>
+                <th>总价</th>
+                <th>操作</th>
+            </tr>
+
+            <!--//循环遍历goods数组-->
+            <tr ng-repeat="good in goods">
+                <td><input type="checkbox" class="sl" ng-click="checksel($index)" /></td>
+                <td>{{good.kind}}</td>
+                <td>{{good.count}}</td>
+                <td>{{good.price}}</td>
+                <td>{{good.price*good.count}}</td>
+                <td><input type="button" value="删除" ng-click="del($index)" /></td>
+            </tr>
+        </table>
+
+        <script type="text/javascript">
+            var mapp = angular.module("Mapp", []);
+            mapp.controller("Mcon", function($scope) {
+                //给数组默认添加组数据
+                $scope.goods = [{
+                    "flag": false,
+                    "kind": "足球",
+                    "price": 200,
+                    "count": 5
+                }, {
+                    "flag": false,
+                    "kind": "蓝球",
+                    "price": 1000,
+                    "count": 3
+                }];
+                //点击添加按钮时
+                $scope.onClick = function() {
+                    //给数组添加数据
+                    //给变量flag默认false(用于批量删除判断)
+                    $scope.goods.push({
+                        "flag": false,
+                        "kind": $scope.ikind,
+                        "price": $scope.iprice,
+                        "count": $scope.icount
+                    })
+                }
+                //点击删除
+                $scope.del = function($index) {
+                    //删除下标$index的条目
+                    $scope.goods.splice($index, 1)
+                }
+
+                //点击checkbox
+                $scope.checksel = function($index) {
+                    //event.target返回点击的元素
+                    //把flag变量也改变
+                    if(event.target.checked) {
+                        $scope.goods[$index].flag = true;
+                    } else {
+                        //把全选checkbox取消选中
+                        $scope.all = false;
+                        $scope.goods[$index].flag = false;
+                    }
+                }
+
+                //批量删除
+                $scope.onDelAll = function() {
+                    $scope.all = false;
+                    for(i = $scope.goods.length - 1; i >= 0; i--) {
+                        //根据-变量flag的boolean值删除
+                        if($scope.goods[i].flag) {
+                            $scope.goods.splice(i, 1)
+                        }
+                    }
+                }
+
+                //checkbox全选
+                $scope.selectAll = function() {
+                    for(var i = $scope.goods.length - 1; i >= 0; i--) {
+                        //全选/全不选
+                        $scope.goods[i].flag = event.target.checked;
+                        //把每行的checkbox勾选状态也同时改变
+                        $(".sl")[i].checked = event.target.checked;
+                    }
+                }
+            })
+        </script>
+
+    </body>
+
 </html>
